@@ -36,7 +36,7 @@ fun main() {
     resultado.onSuccess {
         println("Deseja adicionar uma descrição? S/N")
         val opcao = leitura.nextLine()
-''
+
         if (opcao.equals("s", true)){
             println("Digite sua descrição:")
             val descricaoPersonalizada = leitura.nextLine()
