@@ -7,47 +7,51 @@ import java.util.*
 //consumindo api
 fun main() {
     val leitura = Scanner(System.`in`)
-    println("Qual o id do jogo que gostaria de usar:")
-    val jogoEscolhido = leitura.nextLine()
-    println(jogoEscolhido)
+    do{
+        println("Qual o id do jogo que gostaria de usar:")
+        val jogoEscolhido = leitura.nextLine()
+        println(jogoEscolhido)
 
-    val buscaApi = BuscaInfo()
-    val informacaoJogo = buscaApi.buscaJogo(jogoEscolhido)
+        val buscaApi = BuscaInfo()
+        val informacaoJogo = buscaApi.buscaJogo(jogoEscolhido)
 
 
 
-    //inicializando jogo
-    var meuJogo: Jogo? = null
+        //inicializando jogo
+        var meuJogo: Jogo? = null
 
-    // intruduzindo runCatching, aka try/catch do kotlin
-    val resultado = runCatching {
+        // intruduzindo runCatching, aka try/catch do kotlin
+        val resultado = runCatching {
 
-        if (informacaoJogo != null) {
-            meuJogo= Jogo(informacaoJogo.info.title,informacaoJogo.info.thumb)
+            if (informacaoJogo != null) {
+                meuJogo= Jogo(informacaoJogo.info.title,informacaoJogo.info.thumb)
+            }
+
         }
 
-    }
+        resultado.onFailure {
+            println("tente outro id")
 
-    resultado.onFailure {
-        println("tente outro id")
-
-    }
-
-    resultado.onSuccess {
-        println("Deseja adicionar uma descrição? S/N")
-        val opcao = leitura.nextLine()
-
-        if (opcao.equals("s", true)){
-            println("Digite sua descrição:")
-            val descricaoPersonalizada = leitura.nextLine()
-            meuJogo?.descricao=descricaoPersonalizada
-            println(meuJogo)
-
-
-        }else {
-            meuJogo?.descricao = meuJogo?.titulo
-            println(meuJogo)
         }
-    }
+
+        resultado.onSuccess {
+            println("Deseja adicionar uma descrição? S/N")
+            val opcao = leitura.nextLine()
+
+            if (opcao.equals("s", true)){
+                println("Digite sua descrição:")
+                val descricaoPersonalizada = leitura.nextLine()
+                meuJogo?.descricao=descricaoPersonalizada
+                println(meuJogo)
+
+
+            }else {
+                meuJogo?.descricao = meuJogo?.titulo
+                println(meuJogo)
+            }
+        }
+        println("Deseja fazer outra busca? S/N")
+        val opcaoRepete = leitura.nextLine()
+    }while (opcaoRepete.equals("s",true))
 
 }

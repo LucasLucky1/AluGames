@@ -17,7 +17,8 @@ fun main(){
 
     gamer1.let {
         it.userName = "jack"
-    }.also { println(gamer1) }
+    }.also { println(gamer1
+    ) }
     println(gamer2)
 
 
